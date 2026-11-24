@@ -1,500 +1,325 @@
+/* --------------------------------
+   ELEMENTOS DEL FORMULARIO
+-------------------------------- */
 
-// Seleccionamos el formulario.
+// Formulario y botón
 const formulario = document.getElementById("form-inscripcion");
+const botonEnviar = formulario.querySelector("button[type='submit']");
 
-// Seleccionamos los campos que vamos a validar.
+// Campos del formulario
+const nombre = document.getElementById("nombre");
+const apellidos = document.getElementById("apellidos");
+const dni = document.getElementById("dni");
+const fechaNac = document.getElementById("fecha-nac");
+const email = document.getElementById("email");
+const telefono = document.getElementById("telefono");
+const direccion = document.getElementById("direccion");
+const ciudad = document.getElementById("ciudad");
+const cp = document.getElementById("cp");
+const altura = document.getElementById("altura");
+const peso = document.getElementById("peso");
+const objetivos = document.getElementById("objetivos");
+const plan = document.getElementById("plan");
+const nifFac = document.getElementById("nif-fac");
+const dirFac = document.getElementById("dir-fac");
+const iban = document.getElementById("iban");
+
+// Consentimientos
+const tos = document.getElementById("tos");
+const rgpd = document.getElementById("rgpd");
+
+// Condiciones médicas
+const condiciones = document.querySelectorAll("input[name='condiciones[]']");
+const ninguna = document.querySelector("input[value='ninguna']");
+
+// Array con todos los campos que debemos validar
 const campos = [
-    document.getElementById("nombre"),
-    document.getElementById("apellidos"),
-    document.getElementById("dni"),
-    document.getElementById("fecha-nac"),
-    document.getElementById("email"),
-    document.getElementById("telefono"),
-    document.getElementById("direccion"),
-    document.getElementById("ciudad"),
-    document.getElementById("cp"),
-    document.getElementById("altura"),
-    document.getElementById("peso"),
-    document.getElementById("objetivos"),
-    document.getElementById("plan"),
-    document.getElementById("nif-fac"),
-    document.getElementById("dir-fac"),
-    document.getElementById("iban")
+    nombre, apellidos, dni, fechaNac, email, telefono,
+    direccion, ciudad, cp, altura, peso, objetivos,
+    plan, nifFac, dirFac, iban
 ];
 
-// Buscamos el contenedor de cada campo.
+
+/* --------------------------------
+   FUNCIONES DE VALIDACIÓN
+-------------------------------- */
+
+// Buscar el contenedor de un campo
 function buscarContenedor(campo) {
-
-    return campo.closest(".control") || campo.parentElement;
-
+    return campo.closest(".control");
 }
 
-// Mostramos el mensaje de error.
-function mostrarError(campo, mensaje) {
-
+// Quitar el mensaje de error de un campo
+function quitarError(campo) {
     const contenedor = buscarContenedor(campo);
+    const error = contenedor.querySelector(".error-msg");
 
-    // Quitamos el mensaje anterior si existe.
+    if (error) {
+        error.remove();
+    }
+
+    campo.removeAttribute("aria-invalid");
+}
+
+// Mostrar un mensaje de error
+function mostrarError(campo, mensaje) {
     quitarError(campo);
 
-    // Creamos el mensaje.
     const error = document.createElement("p");
-
-    error.className = "error";
+    error.className = "error-msg";
     error.textContent = mensaje;
 
-    // Añadimos el mensaje debajo del campo.
-    contenedor.appendChild(error);
-
-    // Marcamos el campo como incorrecto.
+    buscarContenedor(campo).appendChild(error);
     campo.setAttribute("aria-invalid", "true");
-
 }
 
-// Eliminamos el mensaje de error.
-function quitarError(campo) {
-
-    const contenedor = buscarContenedor(campo);
-
-    const error = contenedor.querySelector(".error");
-
-    if (error) {
-
-        error.remove();
-
-    }
-
-    // Quitamos la marca de error.
-    campo.removeAttribute("aria-invalid");
-
-}
-
-// Comprobamos la edad.
-function comprobarEdad(campo) {
-
-    const fecha = new Date(campo.value);
+// Comprobar que la persona tiene entre 16 y 120 años
+function comprobarEdad(fecha) {
+    const partes = fecha.split("-");
+    const anio = Number(partes[0]);
+    const mes = Number(partes[1]);
+    const dia = Number(partes[2]);
 
     const hoy = new Date();
+    let edad = hoy.getFullYear() - anio;
 
-    // Calculamos la edad.
-    let edad = hoy.getFullYear() - fecha.getFullYear();
-
-    const mes = hoy.getMonth() - fecha.getMonth();
-
-    // Ajustamos la edad si todavía no ha cumplido años.
-    if (mes < 0 || (mes === 0 && hoy.getDate() < fecha.getDate())) {
-
+    if (hoy.getMonth() + 1 < mes) {
         edad--;
-
+    } else if (hoy.getMonth() + 1 === mes) {
+        if (hoy.getDate() < dia) {
+            edad--;
+        }
     }
 
-    // Comprobamos que la edad esté entre 16 y 120.
-    if (edad < 16 || edad > 120) {
-
-        return false;
-
-    }
-
-    return true;
-
+    return edad >= 16 && edad <= 120;
 }
 
-// Comprobamos cada campo.
+// Validar un campo individual
 function validarCampo(campo) {
-
     quitarError(campo);
 
-    // Si el campo está vacío y es obligatorio.
+    // Comprobar si está vacío y es obligatorio
     if (campo.required && campo.value.trim() === "") {
-
         mostrarError(campo, "Este campo es obligatorio.");
-
         return false;
-
     }
 
-    // Si el campo tiene un patrón o formato incorrecto.
-    if (!campo.checkValidity()) {
-
-        let mensaje = "El campo no tiene un formato válido.";
-
-        // Mensajes según el campo.
-        switch (campo.id) {
-
-            case "nombre":
-                mensaje = "Introduce un nombre válido.";
-                break;
-
-            case "apellidos":
-                mensaje = "Introduce unos apellidos válidos.";
-                break;
-
-            case "dni":
-                mensaje = "Introduce un documento válido.";
-                break;
-
-            case "email":
-                mensaje = "Introduce un correo electrónico válido.";
-                break;
-
-            case "telefono":
-                mensaje = "Introduce un teléfono válido.";
-                break;
-
-            case "direccion":
-                mensaje = "Introduce una dirección válida.";
-                break;
-
-            case "ciudad":
-                mensaje = "Introduce una ciudad válida.";
-                break;
-
-            case "cp":
-                mensaje = "El código postal debe tener 5 números.";
-                break;
-
-            case "altura":
-                mensaje = "La altura debe estar entre 140 y 220 cm.";
-                break;
-
-            case "peso":
-                mensaje = "El peso debe estar entre 35 y 250 kg.";
-                break;
-
-            case "objetivos":
-                mensaje = "Escribe tus objetivos.";
-                break;
-
-            case "plan":
-                mensaje = "Selecciona un plan.";
-                break;
-
-            case "nif-fac":
-                mensaje = "Introduce un NIF válido.";
-                break;
-
-            case "dir-fac":
-                mensaje = "Introduce una dirección válida.";
-                break;
-
-            case "iban":
-                mensaje = "Introduce los 4 últimos números.";
-                break;
-
-        }
-
-        mostrarError(campo, mensaje);
-
+    // Comprobar las restricciones del HTML
+    if (campo.value !== "" && campo.checkValidity() === false) {
+        mostrarError(campo, "El valor introducido no es válido.");
         return false;
-
     }
 
-    // Comprobamos la fecha de nacimiento.
-    if (campo.id === "fecha-nac") {
-
-        if (!comprobarEdad(campo)) {
-
+    // Comprobar la edad
+    if (campo.id === "fecha-nac" && campo.value !== "") {
+        if (comprobarEdad(campo.value) === false) {
             mostrarError(campo, "Debes tener entre 16 y 120 años.");
-
             return false;
-
         }
-
     }
 
     return true;
-
 }
 
-// Comprobamos que no se seleccionen Ninguna y otras condiciones.
+// Comprobar las condiciones médicas
 function validarCondiciones() {
+    let otrasSeleccionadas = false;
 
-    const condiciones = document.querySelectorAll(
-        'input[name="condiciones[]"]'
-    );
-
-    const ninguna = document.querySelector(
-        'input[name="condiciones[]"][value="ninguna"]'
-    );
-
-    // Comprobamos si se ha marcado Ninguna.
-    if (ninguna.checked) {
-
-        for (let i = 0; i < condiciones.length; i++) {
-
-            if (condiciones[i] !== ninguna && condiciones[i].checked) {
-
-                ninguna.checked = false;
-
-                mostrarError(
-                    condiciones[0],
-                    "No puedes seleccionar Ninguna junto a otras condiciones."
-                );
-
-                return false;
-
-            }
-
+    condiciones.forEach(function(campo) {
+        if (campo.value !== "ninguna" && campo.checked) {
+            otrasSeleccionadas = true;
         }
+    });
 
+    const contenedor = ninguna.closest(".chips");
+    const errorAnterior = contenedor.querySelector(".error-msg");
+
+    if (errorAnterior) {
+        errorAnterior.remove();
     }
 
-    // Quitamos el mensaje si las selecciones son correctas.
-    const contenedor = condiciones[0].closest(".chips");
+    ninguna.removeAttribute("aria-invalid");
 
-    const error = contenedor.querySelector(".error");
+    // No se puede marcar Ninguna junto con otra condición
+    if (ninguna.checked && otrasSeleccionadas) {
+        const error = document.createElement("p");
+        error.className = "error-msg";
+        error.textContent = "No puedes seleccionar Ninguna junto a otras condiciones.";
 
-    if (error) {
+        contenedor.appendChild(error);
+        ninguna.setAttribute("aria-invalid", "true");
 
-        error.remove();
-
+        return false;
     }
 
     return true;
-
 }
 
-// Validamos los campos al salir de ellos.
+// Comprobar que se han aceptado los consentimientos
+function validarConsentimientos() {
+    let correcto = true;
+
+    if (tos.checked === false) {
+        correcto = false;
+    }
+
+    if (rgpd.checked === false) {
+        correcto = false;
+    }
+
+    return correcto;
+}
+
+
+/* --------------------------------
+   COMPROBAR TODO EL FORMULARIO
+-------------------------------- */
+
+// Comprobar todos los campos y las condiciones
+function comprobarFormulario() {
+    let correcto = true;
+
+    campos.forEach(function(campo) {
+        if (campo.checkValidity() === false) {
+            correcto = false;
+        }
+
+        if (campo.id === "fecha-nac" && campo.value !== "") {
+            if (comprobarEdad(campo.value) === false) {
+                correcto = false;
+            }
+        }
+    });
+
+    if (validarCondiciones() === false) {
+        correcto = false;
+    }
+
+    if (validarConsentimientos() === false) {
+        correcto = false;
+    }
+
+    return correcto;
+}
+
+// Activar o desactivar el botón de enviar
+function actualizarBoton() {
+    if (comprobarFormulario()) {
+        botonEnviar.disabled = false;
+        botonEnviar.setAttribute("aria-disabled", "false");
+    } else {
+        botonEnviar.disabled = true;
+        botonEnviar.setAttribute("aria-disabled", "true");
+    }
+}
+
+
+/* --------------------------------
+   EVENTOS DEL FORMULARIO
+-------------------------------- */
+
+// Validar los campos al escribir, cambiar o salir de ellos
 campos.forEach(function(campo) {
 
     campo.addEventListener("blur", function() {
-
         validarCampo(campo);
-
+        actualizarBoton();
     });
-
-});
-
-// Validamos los campos mientras se escriben.
-campos.forEach(function(campo) {
 
     campo.addEventListener("input", function() {
-
         validarCampo(campo);
-
+        actualizarBoton();
     });
-
-});
-
-// Validamos los campos cuando cambian.
-campos.forEach(function(campo) {
 
     campo.addEventListener("change", function() {
-
         validarCampo(campo);
-
+        actualizarBoton();
     });
 
 });
 
-// Comprobamos las condiciones médicas al seleccionarlas.
-const condiciones = document.querySelectorAll(
-    'input[name="condiciones[]"]'
-);
-
-condiciones.forEach(function(condicion) {
-
-    condicion.addEventListener("change", function() {
-
+// Validar las condiciones médicas al seleccionarlas
+condiciones.forEach(function(campo) {
+    campo.addEventListener("change", function() {
         validarCondiciones();
-
+        actualizarBoton();
     });
-
 });
 
-// Validamos el formulario al enviarlo.
+// Actualizar el botón al aceptar los consentimientos
+tos.addEventListener("change", actualizarBoton);
+rgpd.addEventListener("change", actualizarBoton);
+
+
+/* --------------------------------
+   ENVÍO DEL FORMULARIO
+-------------------------------- */
+
 formulario.addEventListener("submit", function(event) {
 
-    // Evitamos que se envíe automáticamente.
+    // Evitar que se envíe el formulario directamente
     event.preventDefault();
 
-    let formularioValido = true;
+    let correcto = true;
 
-    // Comprobamos todos los campos.
+    // Validar todos los campos
     campos.forEach(function(campo) {
-
-        if (!validarCampo(campo)) {
-
-            formularioValido = false;
-
+        if (validarCampo(campo) === false) {
+            correcto = false;
         }
-
     });
 
-    // Comprobamos las condiciones médicas.
-    if (!validarCondiciones()) {
-
-        formularioValido = false;
-
+    // Validar condiciones y consentimientos
+    if (validarCondiciones() === false) {
+        correcto = false;
     }
 
-    // Si hay errores, enfocamos el primer campo incorrecto.
-    if (!formularioValido) {
+    if (validarConsentimientos() === false) {
+        correcto = false;
+    }
 
-        const primerError = formulario.querySelector(
-            '[aria-invalid="true"]'
-        );
+    // Mostrar el resultado
+    if (correcto) {
+        alert("¡Formulario validado correctamente!");
+    } else {
+        actualizarBoton();
+
+        // Llevar el cursor al primer campo incorrecto
+        const primerError = formulario.querySelector("[aria-invalid='true']");
 
         if (primerError) {
-
             primerError.focus();
-
         }
-
-        return;
-
     }
-
-    // Si todo es correcto.
-    alert("¡Formulario validado correctamente!");
 
 });
 
-// Limpiamos los errores al pulsar Limpiar.
+
+/* --------------------------------
+   LIMPIAR EL FORMULARIO
+-------------------------------- */
+
 formulario.addEventListener("reset", function() {
 
-    campos.forEach(function(campo) {
+    setTimeout(function() {
 
-        quitarError(campo);
+        // Eliminar todos los mensajes de error
+        document.querySelectorAll(".error-msg").forEach(function(error) {
+            error.remove();
+        });
 
-    });
+        // Quitar las marcas de campos incorrectos
+        document.querySelectorAll("[aria-invalid]").forEach(function(campo) {
+            campo.removeAttribute("aria-invalid");
+        });
 
-    const errores = formulario.querySelectorAll(".error");
+        // Desactivar el botón de enviar
+        botonEnviar.disabled = true;
+        botonEnviar.setAttribute("aria-disabled", "true");
 
-    errores.forEach(function(error) {
-
-        error.remove();
-
-    });
-
-});
-
-// --------------------------------------------------
-// IMPEDIMOS ESCRIBIR CARACTERES INCORRECTOS
-// --------------------------------------------------
-
-// Nombre, apellidos y ciudad: solo letras y caracteres permitidos.
-const camposTexto = ["nombre", "apellidos", "ciudad"];
-
-camposTexto.forEach(function(id) {
-
-    const campo = document.getElementById(id);
-
-    campo.addEventListener("input", function() {
-
-        campo.value = campo.value.replace(
-            /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ '-]/g,
-            ""
-        );
-
-    });
+    }, 10);
 
 });
 
-// DNI y NIF: solo letras y números.
-const camposDocumento = ["dni", "nif-fac"];
-
-camposDocumento.forEach(function(id) {
-
-    const campo = document.getElementById(id);
-
-    campo.addEventListener("input", function() {
-
-        campo.value = campo.value.replace(/[^A-Za-z0-9]/g, "");
-
-    });
-
-});
-
-// Teléfono: solo números y el símbolo +.
-const telefono = document.getElementById("telefono");
-
-telefono.addEventListener("input", function() {
-
-    telefono.value = telefono.value.replace(/[^0-9+]/g, "");
-
-});
-
-// Código postal e IBAN: solo números.
-const camposNumericos = ["cp", "iban"];
-
-camposNumericos.forEach(function(id) {
-
-    const campo = document.getElementById(id);
-
-    campo.addEventListener("input", function() {
-
-        campo.value = campo.value.replace(/[^0-9]/g, "");
-
-    });
-
-});
-
-// Dirección y dirección de facturación.
-const camposDireccion = ["direccion", "dir-fac"];
-
-camposDireccion.forEach(function(id) {
-
-    const campo = document.getElementById(id);
-
-    campo.addEventListener("input", function() {
-
-        campo.value = campo.value.replace(
-            /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9 ,.ºª/#'-]/g,
-            ""
-        );
-
-    });
-
-});
-
-// Altura: solo números enteros.
-const altura = document.getElementById("altura");
-
-altura.addEventListener("input", function() {
-
-    altura.value = altura.value.replace(/[^0-9]/g, "");
-
-});
-
-// Peso: permitimos números, coma y punto decimal.
-const peso = document.getElementById("peso");
-
-peso.addEventListener("input", function() {
-
-    // Eliminamos los caracteres que no están permitidos.
-    peso.value = peso.value.replace(/[^0-9.,]/g, "");
-
-    // Evitamos que se escriban varias comas o puntos.
-    if (peso.value.split(",").length > 2) {
-
-        peso.value = peso.value.slice(0, -1);
-
-    }
-
-    if (peso.value.split(".").length > 2) {
-
-        peso.value = peso.value.slice(0, -1);
-
-    }
-
-    // Evitamos mezclar la coma y el punto decimal.
-    if (peso.value.includes(",") && peso.value.includes(".")) {
-
-        peso.value = peso.value.slice(0, -1);
-
-    }
-
-});
-
-// Referido: letras, números y caracteres habituales.
-const referido = document.getElementById("referido");
-
-referido.addEventListener("input", function() {
-
-    referido.value = referido.value.replace(
-        /[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9 '-]/g,
-        ""
-    );
-
-});
+// Comprobar el estado del botón al cargar la página
+actualizarBoton();

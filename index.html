@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es">
   <head>
@@ -6,7 +7,8 @@
     <title>Inscripción Gimnasio — Formulario HTML + CSS + JS</title>
     <!-- <title>DEPLOY TEST 2026-01-14 10:55</title> -->
 
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./styles.css" />
+
     <meta name="description" content="Formulario accesible y responsivo de inscripción a gimnasio hecho con HTML y CSS puros, con validación en JavaScript. completo" />
   </head>
   <body>
@@ -29,17 +31,11 @@
           <div class="grid cols-3">
             <div class="control">
               <label for="nombre">Nombre <span class="req" aria-hidden="true">*</span></label>
-
-              <!-- CAMBIO: solo permite letras, espacios, guiones y apóstrofes -->
-              <input id="nombre" name="nombre" type="text" autocomplete="given-name" placeholder="Juan" required minlength="2" maxlength="40"
-                pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([ '-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*" />
+              <input id="nombre" name="nombre" type="text" autocomplete="given-name" placeholder="Juan" required minlength="2" maxlength="40" />
             </div>
             <div class="control">
               <label for="apellidos">Apellidos <span class="req" aria-hidden="true">*</span></label>
-
-              <!-- CAMBIO: permite apellidos compuestos, pero no números -->
-              <input id="apellidos" name="apellidos" type="text" autocomplete="family-name" placeholder="Pérez Gómez" required minlength="2" maxlength="80"
-                pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([ '-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*" />
+              <input id="apellidos" name="apellidos" type="text" autocomplete="family-name" placeholder="Pérez Gómez" required minlength="2" maxlength="80" />
             </div>
             <div class="control">
               <label for="dni">Documento (DNI/NIE/Pasaporte) <span class="req" aria-hidden="true">*</span></label>
@@ -86,11 +82,7 @@
             </div>
             <div class="control">
               <label for="telefono">Teléfono móvil <span class="req" aria-hidden="true">*</span></label>
-
-              <!-- CAMBIO: exige un móvil español de 9 dígitos; permite el prefijo +34 -->
-              <input id="telefono" name="telefono" type="tel" autocomplete="tel" placeholder="600123123" required
-                pattern="(\+34)?[6789][0-9]{8}"
-                title="Introduce un móvil español válido, con 9 dígitos y prefijo +34 opcional" />
+              <input id="telefono" name="telefono" type="tel" autocomplete="tel" placeholder="600123123" required pattern="^[0-9\s+()-]{9,20}$" title="Solo números y + (9–20 caracteres)" />
             </div>
             <div class="control">
               <label for="contacto_pref">Preferencia de contacto</label>
@@ -109,14 +101,10 @@
             </div>
             <div class="control">
               <label for="ciudad">Ciudad <span class="req" aria-hidden="true">*</span></label>
-
-              <!-- CAMBIO: solo permite letras y nombres de ciudad compuestos -->
-              <input id="ciudad" name="ciudad" type="text" autocomplete="address-level2" placeholder="Madrid" required
-                pattern="[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([ '-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*" />
+              <input id="ciudad" name="ciudad" type="text" autocomplete="address-level2" placeholder="Madrid" required />
             </div>
             <div class="control">
               <label for="cp">Código postal <span class="req" aria-hidden="true">*</span></label>
-              <!-- CAMBIO: se mantiene el patrón de exactamente cinco números -->
               <input id="cp" name="cp" type="text" inputmode="numeric" pattern="^[0-9]{5}$" placeholder="28001" required title="5 dígitos" />
             </div>
           </div>
@@ -128,9 +116,7 @@
           <div class="grid cols-3">
             <div class="control">
               <label for="altura">Altura (cm) <span class="req" aria-hidden="true">*</span></label>
-
-              <!-- CAMBIO: altura mínima de 140 cm y máxima de 220 cm -->
-              <input id="altura" name="altura" type="number" min="140" max="220" step="1" placeholder="175" required />
+              <input id="altura" name="altura" type="number" min="120" max="230" step="1" placeholder="175" required />
             </div>
             <div class="control">
               <label for="peso">Peso (kg) <span class="req" aria-hidden="true">*</span></label>
@@ -151,12 +137,12 @@
 
           <div class="grid cols-2">
             <div class="control">
-              <label for="objetivos">Objetivos principales <span class="req" aria-hidden="true">*</span></label>
-              <textarea id="objetivos"
-                        name="objetivos"
-                        placeholder="Pérdida de peso, ganar masa muscular, rehabilitación..."
-                        maxlength="500"
-                        required></textarea>
+            <label for="objetivos">Objetivos principales <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="objetivos"
+                      name="objetivos"
+                      placeholder="Pérdida de peso, ganar masa muscular, rehabilitación..."
+                      maxlength="500"
+                      required></textarea>
 
               <div class="hint">Máximo 500 caracteres.</div>
             </div>
@@ -267,7 +253,7 @@
         </fieldset>
         <div class="actions">
           <button type="reset" class="btn-secondary">Limpiar</button>
-          <button type="submit" class="btn-primary">
+          <button type="submit" class="btn-primary" disabled aria-disabled="true">
             Enviar solicitud
           </button>
         </div>
