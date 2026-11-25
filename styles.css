@@ -1,317 +1,544 @@
+
 /* ============================= */
 /* Reset básico de estilos       */
 /* ============================= */
+
 * {
-  margin: 0;              /* Elimina los márgenes por defecto de todos los elementos */
-  padding: 0;             /* Elimina los rellenos (espaciado interno) por defecto */
-  box-sizing: border-box; /* Hace que el ancho/alto incluyan el padding y el borde */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+
 /* ============================= */
-/* Estilos generales del body    */
+/* Variables de colores          */
 /* ============================= */
+
+:root {
+    --bg: #0e0f13;
+    --panel: #151821;
+    --panel-2: #1a1f2b;
+    --text: #e6e8ef;
+    --muted: #b3b9c6;
+    --accent: #5b8def;
+    --danger: #ef5b5b;
+    --ok: #4caf50;
+    --radius: 16px;
+    --gap: 14px;
+}
+
+
+/* ============================= */
+/* Estilos generales             */
+/* ============================= */
+
+html, body {
+    height: 100%;
+}
+
 body {
-  font-family: Arial, sans-serif; /* Define la tipografía principal de la página */
-  line-height: 1.6;               /* Espaciado entre líneas para mejorar la legibilidad */
-  background-color: #f4f4f4;      /* Color de fondo gris claro */
-  color: #333;                    /* Color del texto en gris oscuro */
-  padding: 10px;                  /* Espacio interior alrededor de todo el contenido */
+    margin: 0;
+    padding: 10px;
+    font: 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    background: radial-gradient(1000px 600px at 80% -10%, #1b2333 0%, #0e0f13 60%);
+    color: var(--text);
 }
 
 
 /* ============================= */
-/* Encabezado principal (header) */
+/* Encabezado principal          */
 /* ============================= */
+
 header {
-  background: #333;   /* Fondo gris oscuro */
-  color: #fff;        /* Texto en color blanco */
-  padding: 1rem 0;    /* Espaciado vertical superior e inferior */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 1100px;
+    margin: 0 auto 22px;
+    padding: 0 20px;
+    background: #333;
+    color: #fff;
 }
 
-/* Estilos de la barra de navegación dentro del header */
-header  {
-  display: flex;                  /* Utiliza flexbox para organizar los elementos */
-  justify-content: space-between; /* Distribuye los elementos: uno a la izquierda y otro a la derecha */
-  align-items: center;            /* Centra verticalmente los elementos */
-  max-width: 1100px;              /* Limita el ancho máximo del contenedor */
-  margin: auto;                   /* Centra el contenedor horizontalmente */
-  padding: 0 20px;                /* Añade espacio lateral interno */
-}
-
-/* Lista de enlaces de navegación */
 header nav ul {
-  list-style: none; /* Elimina los puntos o viñetas de la lista */
-  display: flex;    /* Coloca los elementos de la lista en línea (horizontal) */
-  gap: 1rem;        /* Espaciado uniforme entre cada enlace */
+    list-style: none;
+    display: flex;
+    gap: 1rem;
 }
 
-/* Estilos para los enlaces dentro del nav */
 header nav a {
-  color: #fff;            /* Texto de los enlaces en blanco */
-  text-decoration: none;  /* Elimina el subrayado por defecto */
+    color: #fff;
+    text-decoration: none;
 }
 
+
 /* ============================= */
-/* Título principal              */
+/* Marca y logotipo              */
 /* ============================= */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), #9aaeff);
+}
+
+
+/* ============================= */
+/* Títulos                       */
+/* ============================= */
+
+h1 {
+    font-size: clamp(1.4rem, 2vw + .6rem, 2rem);
+    margin: 0;
+}
+
 .titulo-principal {
-  text-align: center;   /* Centra el texto horizontalmente */
-  margin-top: 20px;     /* Añade espacio superior */
-  font-size: 2.2em;     /* Aumenta el tamaño de fuente (2.2 veces el tamaño base) */
-  color: #333;          /* Color del texto en gris oscuro */
+    text-align: center;
+    margin-top: 20px;
+    font-size: 2.2em;
+    color: #333;
 }
 
+.sub {
+    color: var(--muted);
+    margin: 2px 0 0;
+    font-size: .95rem;
+}
+
+
 /* ============================= */
-/* Contenido principal (main)    */
+/* Contenido principal           */
 /* ============================= */
+
 main {
-  max-width: 1100px;   /* Define un ancho máximo para no ocupar toda la pantalla */
-  margin: 20px auto;   /* Margen superior e inferior de 20px y centrado horizontal */
-  background: #fff;    /* Fondo blanco */
-  padding: 20px;       /* Espaciado interno de 20px en todo el contenido */
-  border-radius: 8px;  /* Bordes redondeados para un efecto más moderno */
+    max-width: 1100px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
 }
+
+
 /* ============================= */
-/* Estilos para botones          */
+/* Contenedor principal          */
 /* ============================= */
+
+.wrap {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+
+/* ============================= */
+/* Formulario                    */
+/* ============================= */
+
+form {
+    background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+    border-radius: var(--radius);
+    padding: 22px;
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+fieldset {
+    border: 1px solid rgba(255,255,255,.12);
+    padding: 18px;
+    border-radius: 14px;
+    margin: 0 0 18px;
+}
+
+legend {
+    padding: 0 8px;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: .2px;
+}
+
+
+/* ============================= */
+/* Organización de los campos    */
+/* ============================= */
+
+.grid {
+    display: grid;
+    gap: var(--gap);
+}
+
+/* 2 columnas desde 720px */
+@media (min-width: 720px) {
+    .grid.cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 980px) {
+    .grid.cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+
+/* ============================= */
+/* Etiquetas y campos            */
+/* ============================= */
+
+label {
+    display: block;
+    font-weight: 600;
+    font-size: .92rem;
+    color: var(--muted);
+    margin: 2px 0 6px;
+}
+
+.control {
+    position: relative;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    background: #0f1320;
+    border: 1px solid rgba(255,255,255,.12);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+}
+
+textarea {
+    min-height: 96px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #8390a6;
+}
+
+
+/* ============================= */
+/* Estado al seleccionar un campo */
+/* ============================= */
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(91,141,239,.18);
+    background: #0c111c;
+}
+
+
+/* ============================= */
+/* Validación nativa             */
+/* ============================= */
+
+input:required:invalid,
+select:required:invalid,
+textarea:required:invalid {
+    border-color: rgba(239,91,91,.6);
+}
+
+input:required:valid,
+select:required:valid,
+textarea:required:valid {
+    border-color: rgba(76,175,80,.6);
+}
+
+
+/* ============================= */
+/* Otros elementos del formulario */
+/* ============================= */
+
+.hint {
+    font-size: .85rem;
+    color: #93a0b7;
+    margin-top: 6px;
+}
+
+.inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.inline > label {
+    margin: 0;
+    font-weight: 500;
+}
+
+.chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #0f1320;
+    border: 1px solid rgba(255,255,255,.12);
+    padding: 10px 12px;
+    border-radius: 999px;
+}
+
+.chip input {
+    margin: 0;
+}
+
+
+/* ============================= */
+/* Botones                       */
+/* ============================= */
+
 button {
-  padding: 10px 15px;   /* Espaciado interno: 10px arriba/abajo y 15px a los lados */
-  border: none;         /* Elimina los bordes por defecto */
-  background: #0077cc;  /* Fondo azul */
-  color: white;         /* Texto blanco */
-  cursor: pointer;      /* Cambia el cursor a "mano" al pasar sobre el botón */
-  border-radius: 5px;   /* Bordes redondeados del botón */
+    appearance: none;
+    border: 0;
+    padding: 12px 18px;
+    background: #0077cc;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: .2px;
 }
-/* Estilo del botón al pasar el ratón por encima */
+
 button:hover {
-  background: #005fa3; /* Cambia el color de fondo a un azul más oscuro */
+    background: #005fa3;
 }
+
+.actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #0b0e16;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,.22);
+}
+
+.req {
+    color: #ef9a9a;
+    font-weight: 700;
+}
+
 
 /* ============================= */
-/* Footer de autoría             */
+/* Notas y textos adicionales    */
 /* ============================= */
-.site-footer {
-  text-align: center;      /* Centra el contenido del footer */
-  margin-top: 40px;        /* Separación superior del formulario */
-  padding: 24px 16px;      /* Espaciado interno */
-  background: var(--panel); /* Usa el color del tema oscuro */
-  border-radius: var(--radius); /* Bordes redondeados consistentes */
-  box-shadow: var(--shadow);    /* Sombra para profundidad */
-  color: var(--muted);     /* Color de texto apagado */
-  font-size: 14px;         /* Tamaño de fuente más pequeño */
-  line-height: 1.6;        /* Espaciado entre líneas */
+
+.note {
+    background: #0c111c;
+    border: 1px dashed rgba(255,255,255,.18);
+    padding: 12px 14px;
+    border-radius: 12px;
+    color: #aeb7c7;
+    font-size: .92rem;
 }
 
-.site-footer p {
-  margin: 8px 0;           /* Espaciado entre párrafos */
+.foot {
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: 10px;
 }
 
-.site-footer strong {
-  color: var(--accent);    /* Resalta el nombre con color de acento */
-  font-weight: 600;        /* Peso de fuente semi-bold */
+
+/* ============================= */
+/* Accesibilidad visual          */
+/* ============================= */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
 }
 
-.site-footer .footer-details {
-  font-size: 13px;         /* Tamaño más pequeño para detalles */
-  color: var(--muted);     /* Color apagado */
-  margin-top: 4px;
+
+/* ============================= */
+/* Tabla de precios              */
+/* ============================= */
+
+.plan-card {
+    background: #0f1320;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px;
+    padding: 12px 14px;
 }
 
-.site-footer .footer-links {
-  margin-top: 12px;        /* Separación de los enlaces */
+.plan-card h4 {
+    margin: .2rem 0 .6rem;
+    font-size: 1rem;
 }
 
-.site-footer .footer-links a {
-  color: var(--accent);    /* Color de enlaces con acento */
-  text-decoration: none;   /* Sin subrayado */
-  transition: color 0.2s ease; /* Transición suave */
-  font-weight: 500;
+.price {
+    font-weight: 800;
 }
 
-.site-footer .footer-links a:hover {
-  color: var(--text);      /* Color más claro al pasar el mouse */
-  text-decoration: underline; /* Subrayado en hover */
-}
 
-.site-footer .separator {
-  margin: 0 8px;           /* Espaciado del separador */
-  color: var(--muted);     /* Color apagado para el separador */
-}
+/* ============================================================ */
+/* ESTILOS DE VALIDACIÓN DEL FORMULARIO                          */
+/* ============================================================ */
 
-.site-footer .footer-copyright {
-  margin-top: 12px;        /* Separación superior */
-  font-size: 12px;         /* Tamaño más pequeño */
-  color: var(--muted);     /* Color apagado */
-  opacity: 0.8;            /* Transparencia ligera */
-}
-      :root{
-        --bg: #0e0f13;
-        --panel: #151821;
-        --panel-2: #1a1f2b;
-        --text: #e6e8ef;
-        --muted: #b3b9c6;
-        --accent: #5b8def;
-        --danger: #ef5b5b;
-        --ok: #4caf50;
-        --radius: 16px;
-        --gap: 14px;
-        --shadow: 0 10px 30px rgba(0,0,0,.35);
-      }
-      *{box-sizing: border-box}
-      html,body{height:100%}
-      body{
-        margin:0; font: 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-        background: radial-gradient(1000px 600px at 80% -10%, #1b2333 0%, #0e0f13 60%);
-        color: var(--text);
-      }
-      .wrap{
-        max-width: 1100px; margin: 40px auto; padding: 0 16px;
-      }
-      header{
-        display:flex; align-items:center; justify-content:space-between; gap: 12px; margin-bottom: 22px;
-      }
-      .brand{ display:flex; align-items:center; gap:10px }
-      .logo{ width:40px; height:40px; border-radius:12px; background: linear-gradient(135deg, var(--accent), #9aaeff); box-shadow: var(--shadow); }
-      h1{ font-size: clamp(1.4rem, 2vw + .6rem, 2rem); margin:0 }
-      .sub{ color: var(--muted); margin: 2px 0 0; font-size:.95rem }
-
-      form{
-        background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 22px;
-        border: 1px solid rgba(255,255,255,.06);
-      }
-
-      fieldset{ border: 1px solid rgba(255,255,255,.12); padding: 18px; border-radius: 14px; margin: 0 0 18px }
-      legend{ padding: 0 8px; color: var(--muted); font-weight: 600; letter-spacing:.2px }
-
-      .grid{ display:grid; gap: var(--gap) }
-      /* 2 columnas desde 720px */
-      @media (min-width: 720px){
-        .grid.cols-2{ grid-template-columns: repeat(2, minmax(0,1fr)) }
-      }
-      @media (min-width: 980px){
-        .grid.cols-3{ grid-template-columns: repeat(3, minmax(0,1fr)) }
-      }
-
-      label{ display:block; font-weight:600; font-size:.92rem; color: var(--muted); margin: 2px 0 6px }
-      .control{ position: relative }
-      input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], input[type="password"],
-      select, textarea{
-        width: 100%;
-        background: #0f1320;
-        border: 1px solid rgba(255,255,255,.12);
-        color: var(--text);
-        border-radius: 12px;
-        padding: 12px 14px;
-        outline: none;
-        transition: border-color .2s, box-shadow .2s, background .2s;
-      }
-      textarea{ min-height: 96px; resize: vertical }
-      input::placeholder, textarea::placeholder{ color: #8390a6 }
-      input:focus, select:focus, textarea:focus{
-        border-color: var(--accent);
-        box-shadow: 0 0 0 4px rgba(91,141,239,.18);
-        background: #0c111c;
-      }
-      /* Validación nativa */
-      input:required:invalid, select:required:invalid, textarea:required:invalid{ border-color: rgba(239,91,91,.6) }
-      input:required:valid, select:required:valid, textarea:required:valid{ border-color: rgba(76,175,80,.6) }
-
-      .hint{ font-size:.85rem; color:#93a0b7; margin-top:6px }
-      .inline{ display:flex; align-items:center; gap:10px; flex-wrap: wrap }
-      .inline > label{ margin:0; font-weight:500 }
-      .chips{ display:flex; gap:8px; flex-wrap:wrap }
-      .chip{ display:inline-flex; align-items:center; gap:8px; background: #0f1320; border:1px solid rgba(255,255,255,.12); padding:10px 12px; border-radius: 999px }
-      .chip input{ margin:0 }
-
-      .actions{ display:flex; gap: 12px; justify-content:flex-end; margin-top: 6px; flex-wrap: wrap }
-      button{
-        appearance: none; border:0; padding: 12px 18px; border-radius: 12px; cursor:pointer; font-weight:700; letter-spacing:.2px
-      }
-      .btn-primary{ background: var(--accent); color: #0b0e16; box-shadow: var(--shadow) }
-      .btn-secondary{ background: transparent; color: var(--text); border:1px solid rgba(255,255,255,.22) }
-      .req{ color: #ef9a9a; font-weight:700 }
-
-      .note{
-        background: #0c111c; border: 1px dashed rgba(255,255,255,.18); padding: 12px 14px; border-radius: 12px; color: #aeb7c7; font-size:.92rem
-      }
-      .foot{ color: var(--muted); font-size:.85rem; margin-top: 10px }
-
-      /* Accesibilidad visual */
-      .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0 }
-
-      /* Tabla de precios simple */
-      .plan-card{
-        background: #0f1320; border:1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 12px 14px
-      }
-      .plan-card h4{ margin:.2rem 0 .6rem; font-size:1rem }
-      .price{ font-weight:800 }
-
-input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"]{
-  border-color: #e74c3c;
-  box-shadow: 0 0 0 3px rgba(231,76,60,.2);
-}
-.error-msg{ font-size:.9rem; margin-top:6px }
-
-/* Hace que el chip "apagado" se note */
-.chip.is-disabled { opacity: .55; }
-      
-/* Estado de error más notorio en el control completo */
-.control.has-error label {
-  color: #ffb3b3; /* resalta la etiqueta en error */
-}
-
-/* Input/textarea/select con error: ya tienes border+shadow vía aria-invalid */
+/* Campo que tiene un error */
 input[aria-invalid="true"],
 select[aria-invalid="true"],
-textarea[aria-invalid="true"]{
-  border-color: var(--danger);
-  box-shadow: 0 0 0 3px rgba(239,91,91,.25);
+textarea[aria-invalid="true"] {
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 0 4px rgba(239,91,91,.18);
+    background: #0c111c;
 }
 
-/* Mensaje de error destacado, con icono + fondo */
-.error-msg{
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin-top: 8px;
-  padding: 10px 12px;
-  font-size: .95rem;
-  font-weight: 600;
-  color: #ffd7d7;                         /* texto claro sobre fondo oscuro */
-  background: rgba(239,91,91,.12);        /* tinte rojo suave */
-  border: 1px solid rgba(239,91,91,.35);  /* define el contorno */
-  border-left: 4px solid var(--danger);   /* “barra” de alerta */
-  border-radius: 10px;
-
-  /* Aparición suave (una sola vez) */
-  animation: error-in .18s ease-out;
+/* Campo que se ha validado correctamente: ahora aparece verde */
+input[data-valid="true"],
+select[data-valid="true"],
+textarea[data-valid="true"] {
+    border-color: var(--ok) !important;
+    box-shadow: 0 0 0 4px rgba(76,175,80,.18);
+    background: #0c111c;
 }
 
-.error-msg::before{
-  content: "⚠";               /* icono simple; opcional sustituir por SVG */
-  line-height: 1;
-  margin-top: 2px;
-  font-size: 1.05em;
+
+/* ============================= */
+/* Mensajes de error             */
+/* ============================= */
+
+.error-msg {
+    margin-top: 6px;
+    padding: 8px 10px;
+    font-size: .9rem;
+    color: #ffd3d3;
+    background: rgba(239,91,91,.12);
+    border-left: 4px solid var(--danger);
+    border-radius: 8px;
 }
 
-/* Desactiva animación si el usuario prefiere menos movimiento */
-@media (prefers-reduced-motion: reduce) {
-  .error-msg { animation: none; }
+
+/* ============================= */
+/* Pie de página                 */
+/* ============================= */
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background: #333;
+    color: #fff;
+    border-radius: 8px;
 }
 
-/* Micro-animación de entrada (sin “titilar”) */
-@keyframes error-in {
-  from { transform: translateY(-2px); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+
+/* ============================= */
+/* Página de confirmación        */
+/* ============================= */
+
+.confirmation {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
 }
 
-/* Chip deshabilitado ya lo tienes */
-.chip.is-disabled { opacity: .55; }
+.confirmation-card {
+    width: 100%;
+    max-width: 600px;
+    padding: 50px 35px;
+    background-color: #ffffff;
+    border: 1px solid #d5e3d8;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
 
-button[disabled] {
-  opacity: .6;
-  cursor: not-allowed;
-  filter: grayscale(0.2);
+.confirmation-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3f3e8;
+    color: #278344;
+    border-radius: 50%;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.confirmation-card h2 {
+    margin-bottom: 20px;
+    color: #245c37;
+    font-size: 30px;
+}
+
+.confirmation-card p {
+    margin-bottom: 15px;
+    color: #333333;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.confirmation-card .confirmation-text {
+    color: #245c37;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.confirmation-button {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 14px 30px;
+    background-color: #278344;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 9px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.confirmation-button:hover {
+    background-color: #1d6534;
+}
+
+@media (max-width: 600px) {
+
+    .confirmation-card {
+        padding: 35px 20px;
+    }
+
+    .confirmation-card h2 {
+        font-size: 25px;
+    }
+
 }
