@@ -395,25 +395,29 @@ function validarCampo(campo, tipo) {
     }
 
     // VALIDAR CIUDAD
+
     else if (tipo === "ciudad") {
+
+        const letras = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+([ '-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$/;
 
         if (valor === "") {
             mostrarError(campo, "La ciudad es obligatoria");
         }
-        else if (/[0-9]/.test(valor) === true) {
-            mostrarError(campo, "La ciudad no puede contener números");
-        }
         else if (valor.length < 3) {
             mostrarError(campo, "La ciudad debe tener al menos 3 caracteres");
         }
-        else if (valor.length > 50) {
-            mostrarError(campo, "La ciudad no puede superar los 50 caracteres");
+        else if (valor.length > 40) {
+            mostrarError(campo, "La ciudad no puede superar los 40 caracteres");
+        }
+        else if (letras.test(valor) === false) {
+            mostrarError(campo, "La ciudad no puede contener símbolos especiales");
         }
         else {
             quitarError(campo);
         }
 
     }
+
 
     // VALIDAR CÓDIGO POSTAL
     else if (tipo === "cp") {
